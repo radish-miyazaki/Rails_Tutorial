@@ -7,6 +7,9 @@ Minitest::Reporters.use!
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)
+  
+  # test環境下でもapplication_helperを使えるように追加
+  include ApplicationHelper
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
