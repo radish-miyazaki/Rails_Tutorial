@@ -3,11 +3,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
-    if user&.authenticate(params[:session][:password])
+    @user = User.find_by(email: params[:session][:email].downcase)
+    if @user&.authenticate(params[:session][:password])
       # ユーザーログイン後にユーザー情報のページにリダイレクトする
-      log_in user
-      redirect_to user
+      log_in @user
+      params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
+      redirect_to @user
 
     else
       # flashメッセージを表示する
@@ -19,7 +20,7 @@ class SessionsController < ApplicationController
 
 
   def destroy
-    log_out
+    log_out if logged_in? # ログインしている場合にかぎりlog_outを呼び出す
     redirect_to root_url
   end
 end
