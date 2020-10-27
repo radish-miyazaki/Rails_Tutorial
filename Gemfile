@@ -12,6 +12,9 @@ gem 'jbuilder',   '2.9.1'
 gem 'bootsnap',   '1.4.5', require: false
 gem 'bootstrap-sass', '3.4.1'
 gem 'jquery-rails'
+gem 'faker',       '2.1.2' # 本来は開発環境のみで動作するgem
+gem 'will_paginate',           '3.1.8' # ページネーション用gem
+gem 'bootstrap-will_paginate', '1.0.0'
 
 group :development, :test do
   gem 'pry-byebug'
