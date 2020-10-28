@@ -1,8 +1,10 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token # 仮想属性
+  attr_accessor :remember_token, :activation_token # 仮想属性
 
   # 大文字小文字を区別しないように、保存前に全て小文字にする
-  before_save { self.email = email.downcase }
+  before_save :downcase_email
+  # 生成前にアクティベーションURL用のダイジェストを生成する
+  before_create :create_activation_digest
 
   validates :name, presence: true, length: { maximum: 50 }
 
@@ -44,4 +46,15 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+
+  private
+
+    def downcase_email
+      self.email.downcase!
+    end
+
+    def create_activation_digest
+      self.activation_token = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end
