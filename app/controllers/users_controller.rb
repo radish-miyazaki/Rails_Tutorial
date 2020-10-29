@@ -39,8 +39,6 @@ class UsersController < ApplicationController
 
   def index
     # paginateを用いるために変更
-    #@users = User.paginate(page: params[:page])
-    
     # アクティブになっているユーザーだけを変数に入れる
     @users = User.where(activated: true).paginate(page: params[:page])
   end
@@ -52,17 +50,7 @@ class UsersController < ApplicationController
   end
 
   # beforeアクション
-
-  # ログイン済のユーザーかどうか確認
-  def logged_in_user
-    unless logged_in?
-      store_location
-      flash[:danger] = "Please log in."
-      redirect_to login_url
-    end
-  end
-
-  # 正しいユーザーかどうか確認
+  # 正しいユーザーか確認
   def correct_user
     @user = User.find(params[:id])
     redirect_to(root_path) unless current_user?(@user)

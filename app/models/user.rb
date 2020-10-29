@@ -76,6 +76,12 @@ class User < ApplicationRecord
     reset_sent_at < 1.hours.ago
   end
 
+  # 試作フィードの定義
+  # 完全な実装は次章で行う
+  def feed
+    Micropost.where("user_id=?", id)
+  end
+
 
   private
 
