@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :microposts
+
   attr_accessor :remember_token, :activation_token, :reset_token  # 仮想属性
 
   # 大文字小文字を区別しないように、保存前に全て小文字にする
@@ -50,8 +52,6 @@ class User < ApplicationRecord
 
   # アカウントを有効にする
   def activate
-    # update_attribute(:activated, true)
-    # update_attribute(:activated_at, Time.zone.now)
     update_columns(activated: true, activated_at: Time.zone.now)
   end
 
@@ -63,8 +63,7 @@ class User < ApplicationRecord
   # パスワード再設定の属性を設定する
   def create_reset_digest
     self.reset_token = User.new_token
-    update_attribute(:reset_digest, User.digest(reset_token))
-    update_attribute(:reset_sent_at, Time.zone.now)
+    update_columns(reset_digest:  User.digest(reset_token), reset_sent_at: Time.zone.now)
   end
 
   # パスワード再設定用のメールを送信する
@@ -85,8 +84,7 @@ class User < ApplicationRecord
     end
 
     def create_activation_digest
-      # self.activation_token = User.new_token
-      # self.activation_digest = User.digest(activation_token)
-      self.update_columns(activation_token: User.new_token, activation_digest: User.digest(activation_token))
+      self.activation_token = User.new_token
+      self.activation_digest = User.digest(activation_token)
     end
 end
