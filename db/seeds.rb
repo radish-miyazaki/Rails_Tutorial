@@ -33,3 +33,11 @@ users = User.order(:created_at).take(6)
   content = Faker::Lorem.sentence(word_count: 5)
   users.each { |user| user.microposts.create!(content: content) }
 end
+
+# 以下のリレーションを作成する
+users = User.all
+user = User.first
+following = users[2..50]
+followers = users[3..40]
+following.each { |followed| user.follow(followed) } # 最初のユーザーが2から50番目までのユーザーをフォロー
+followers.each { |follower| follower.follow(user) } # 最初のユーザーのフォロワーに3から40番目のユーザーを追加
