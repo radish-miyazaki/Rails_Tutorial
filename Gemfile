@@ -15,6 +15,10 @@ gem 'jquery-rails'
 gem 'faker',       '2.1.2' # 本来は開発環境のみで動作するgem
 gem 'will_paginate',           '3.1.8' # ページネーション用gem
 gem 'bootstrap-will_paginate', '1.0.0'
+gem 'active_storage_validations', '0.8.2' # ActiveStorageバリデーション用
+gem 'image_processing',           '1.9.3' # 画像のリサイズ用
+gem 'mini_magick',                '4.9.5'
+gem 'aws-sdk-s3',              '1.46.0', require: false # 外部Storage利用
 
 group :development, :test do
   gem 'pry-byebug'
